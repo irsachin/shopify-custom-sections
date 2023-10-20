@@ -1,4 +1,5 @@
-section .liquid file 
+(section) countdown.liquid file 
+
 
 {{ 'timer.css' | asset_url |stylesheet_tag}}
 
