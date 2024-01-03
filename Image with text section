@@ -1,0 +1,104 @@
+<style>
+#custom-img-with-text {
+  display: flex;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+#custom-img-with-text img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 768px) {
+  #custom-img-with-text {
+    display: block;
+    width: 100%;
+  }
+
+  #custom-img-with-text img {
+    width: 100%;
+  }
+
+  #custom-img-with-text p {
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 20px;
+    font-size: 16px;
+    color: #333;
+    margin: auto 0;
+  }
+}
+
+  
+</style>
+
+<div id="img-with-text-title" style="text-align:{{ section.settings.img-with-text-alignment }}">
+  <h1>{{ section.settings.title_img_text }}</h1>
+{% for block in section.blocks %}
+<div id="custom-img-with-text">
+    <img src="{{ block.settings.img-custom | img_url: '600x' }}">
+    <p>{{ block.settings.text-custom }}</p>
+</div>
+{% endfor %}
+</div>
+
+
+{% schema %}
+{
+  "name": "Image with text section",
+  "settings": [
+    {
+      "type": "text",
+      "label": "title",
+      "id": "title_img_text",
+      "default": "Image With Text"
+    },
+    {
+      "type":"select",
+      "label":"heading alignment",
+      "id":"img-with-text-alignment",
+      "options":[
+        {
+          "value":"left",
+          "label":"left"
+        },
+         {
+          "value":"center",
+          "label":"center"
+        },
+         {
+          "value":"right",
+          "label":"right"
+        }
+      ],
+      "default":"left"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "add image",
+      "type": "file",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img-custom",
+          "label": "image"
+        },
+         {
+          "type": "richtext",
+          "id": "text-custom",
+          "label": "description text"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name":"Custom Image with text"
+    }
+  ]
+}
+{% endschema %}
+
+
