@@ -1,0 +1,77 @@
+
+<style>
+  #custom_video {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    white-space: nowrap;
+    margin: auto;
+    justify-content: space-around;
+    height:500px;
+  }
+
+  .featured_video {
+    height: 300px;
+    width: 20%;
+  }
+</style>
+
+<div id="video_feed_box">
+  <h1 id="video_title" style="text-align: {{ section.settings.title_alignment }};">{{ section.settings.video_feed_title }}</h1>
+  <div id="custom_video">
+    {% for video in section.blocks %}
+      {{ video.settings.feed_video | video_tag: loop: "loop", id: "featured_video", muted: true, playsinline: true, autoplay: true, controls: true }}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Video feed",
+  "settings": [
+    {
+      "type": "text",
+      "id": "video_feed_title",
+      "label": "Title"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Title Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Add Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "feed_video",
+          "label": "Video"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Feed"
+    }
+  ]
+}
+{% endschema %}
