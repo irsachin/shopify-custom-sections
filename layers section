@@ -1,0 +1,205 @@
+{{ 'meta-section.css' | asset_url | stylesheet_tag }}
+
+{% assign productPage = false %}
+{% if request.page_type == 'product' and product.metafields.custom.image_stack.value %}
+  {% assign productPage = true %}
+{% endif %}
+
+{% assign metaObject = product.metafields.custom.image_stack.value %}
+{% assign sectionHeading = metaObject.heading.value %}
+{% assign stackImages = metaObject.images.value %}
+{% assign descriptions = metaObject.description.value %}
+{% assign descImages = metaObject.description_image.value %}
+
+<style>
+  {% if productPage %}
+  {% for image in stackImages %}
+    .z-{{forloop.index}} {
+      z-index: {{forloop.index}};
+    }
+  {% endfor %}
+    {% else %}
+    {% for block in section.blocks %}
+    .z-{{forloop.index}} {
+      z-index: {{forloop.index}};
+    }
+  {% endfor %}
+    {% endif %}
+  
+  * {
+    --meta-section-color : #1e306e;
+  }
+</style>
+<!-- {{ request.page_type }} -->
+{% if productPage %}
+  {% if metaObject %}
+    <div class="custom-container container">
+      <ul class="stack-list">
+        {% if stackImages %}
+          {% for image in stackImages %}
+            <li
+              class="stack-item{% if forloop.first %} active{% endif %} z-{{ forloop.length | minus: forloop.index }}"
+              data-id="item-{{ forloop.index }}"
+            >
+              {{ image | image_url: width: auto | image_tag }}
+              <span class="icon-digit">{{ forloop.index }}</span>
+            </li>
+          {% endfor %}
+        {% endif %}
+      </ul>
+      <article class="data-section">
+        <h2 class="article-heading">
+          {% if sectionHeading %}{{ sectionHeading }}{% else %}Let's Have A Look Under The Covers{% endif %}
+        </h2>
+        <div class="dynamic-data">
+          {% assign counter = 1 %}
+          {% for image in stackImages %}
+            <div class="dynamic-data-item{% if forloop.first %} active{% endif %}" data-id="item-{{ forloop.index }}">
+              {% if descriptions %}
+                <p>{{ descriptions[forloop.index0] }}</p>
+              {% endif %}
+
+              <!--
+                -{% for image in descImages %}
+                {{ image }}
+                {% endfor %}
+              -->
+              {% if descImages %}
+                <div class="dynamic-image">
+                  {% for image in descImages %}
+                    {% if forloop.index == counter %}
+                      {{ image | image_url: width: auto | image_tag }}
+                    {% else %}
+                      {% continue %}
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <!-- -{{ counter }}- -->
+            </div>
+            {% assign counter = counter | plus: 1 %}
+          {% endfor %}
+        </div>
+      </article>
+    </div>
+  {% endif %}
+
+  
+{% else %}
+
+
+{% assign sectionHeading = section.settings.title %}
+  
+  <div class="custom-container container">
+    <ul class="stack-list">
+      {% for block in section.blocks %}
+        {% if block.settings.image %}
+          <li
+            class="stack-item{% if forloop.first %} active{% endif %} z-{{ forloop.length | minus: forloop.index }}"
+            data-id="item-{{ forloop.index }}"
+          >
+            {{ block.settings.image | image_url: width: auto | image_tag }}
+            <span class="icon-digit">{{ forloop.index }}</span>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    <article class="data-section">
+      <h2 class="article-heading">
+        {% if sectionHeading != blank %}{{ sectionHeading }}{% else %}Let's Have A Look Under The Covers{% endif %}
+      </h2>
+      <div class="dynamic-data">
+        {% for block in section.blocks %}
+          {% assign description = block.settings.description %}
+          {% assign side-image = block.settings.side-image %}
+          <div class="dynamic-data-item{% if forloop.first %} active{% endif %}" data-id="item-{{ forloop.index }}">
+          {% if description %}
+            <p>{{ description }}</p>
+          {% endif %}
+          {% if side-image %}
+            <div class="dynamic-image">
+            {{ side-image | image_url: width: auto | image_tag }}
+            </div>
+          {% endif %}
+          </div>
+        {% endfor %}
+        
+      </div>
+    </article>
+  </div>
+{% endif %}
+
+<script defer>
+  
+  
+  
+ 
+  function removeActive(arrayItems){
+    document.querySelectorAll(arrayItems).forEach(item => {
+      item.classList.remove('active');
+    });
+  }
+document.querySelectorAll('.stack-item').forEach(item => {
+  item.addEventListener('click', function(event) {
+    // document.querySelectorAll('.stack-item').forEach(item => {
+    //   item.classList.remove('active');
+    // });
+    removeActive('.stack-item');
+    this.classList.add('active');
+    removeActive('.dynamic-data-item');
+    document.querySelector(`.dynamic-data-item[data-id = "${this.dataset.id}" ]`).classList.add('active');
+  });
+});
+
+
+
+
+</script>
+
+{% schema %}
+{
+  "name": "Meta Custom Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type":"image",
+      "name":"Image Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label" : "Choose Image"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Side Description"
+        },
+        {
+          "type" : "image_picker",
+          "id": "side-image",
+          "label" : "Choose Side DescriptioN Image"
+        }
+      ]
+    }
+  ],
+  "tag": "section",
+  "class": "meta-section",
+  "presets": [{
+    "name": "Meta Custom Section"
+  }]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
