@@ -198,8 +198,134 @@ document.querySelectorAll('.stack-item').forEach(item => {
 }
 {% endschema %}
 
-{% stylesheet %}
-{% endstylesheet %}
+//css file  
 
-{% javascript %}
-{% endjavascript %}
+
+.meta-section {
+  padding-top: 2em;
+padding-bottom: 5em;
+}
+.stack-list {
+  list-style: none;
+  position: relative;
+  z-index: 2;
+  padding: 0px;
+  padding: 0% 5% 0 0;
+    overflow: hidden;
+}
+.stack-item {
+  position: relative;
+  margin-top: -8%;
+  transition: 0.4s all;
+  cursor: pointer;
+}
+.stack-item:last-child {
+  margin-top: -13%;
+}
+
+.stack-item.active {
+  margin-top: 0%;
+}
+.stack-item img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  /* height:180px; */
+  display: block;
+  transition: 0.2s all;
+  filter: contrast(35%)brightness(145%); 
+}
+.custom-container {
+  display: grid;
+}
+.stack-item.active img{
+  /* height:130px; */
+}
+.stack-item.active img, .stack-item:hover img {
+  filter: initial;
+  transition: 0.3s all;
+}
+
+.stack-item:last-child.active {
+  margin-top: -4%;
+}
+.icon-digit {
+  background: white;
+  width: 25px;
+height: 25px;
+border-radius: 50%;
+text-align: center;
+color: #1e306e;
+border: 1px solid #1e306e;
+display: flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+bottom: 28%;
+right: 8%;
+}
+.icon-digit::before {
+content: "";
+width: 0;
+position: absolute;
+height: 1px;
+background: var(--meta-section-color);
+left: 24px;
+z-index: 1;
+}
+.stack-item.active .icon-digit::before {
+  width: 500px;
+  transition: 1s all;
+}
+.stack-item:nth-child(even) .icon-digit{
+  right: 15%;
+}
+.stack-item.active .icon-digit, .stack-item:hover .icon-digit {
+  background: var(--meta-section-color);
+  color: white;
+  transition: 0.2s background, 0.2s color;
+}
+.dynamic-data-item {
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s all;
+}
+.dynamic-data-item.active {
+  opacity: 1;
+  visibility: visible;
+  transition: 0.3s all;
+  display: block;
+}
+.dynamic-data {
+  position: relative;
+}
+.article-heading {
+  font-weight: normal;
+  font-size: clamp(1em, 7vw, 2.2em);
+  color: var(--meta-section-color);
+  font-family: var(--font-heading-family);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.dynamic-data-item {
+  display: none;
+}
+.dynamic-image img {
+  width: 80%;
+  height: auto;
+  max-width: 100%;
+}
+
+@media (min-width: 975px) {
+  .custom-container {
+    grid-template-columns: 65% 35%;
+  }
+  .data-section {
+  padding-left: 5%;
+    padding-top:10%;
+}
+  .article {
+    min-height: 450px;
+  }
+
+}
