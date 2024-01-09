@@ -1,0 +1,380 @@
+{{ 'text-animation.css' | asset_url | stylesheet_tag}}
+<div class="bodyy">
+<div class="Outerblock">
+        <div class="textt">
+  <p style="color:{{ section.settings.main_text_color }}">{{ section.settings.main_text }}</p>
+  <p>
+    {% for block in section.blocks %}
+    <span class="word wisteria" style="color:{{ block.settings.text_1_color }}">{{ block.settings.text_1 }}</span>
+       <span class="word wisteria" style="color:{{ block.settings.text_2_color }}" >{{ block.settings.text_2 }}</span>
+       <span class="word wisteria" style="color:{{ block.settings.text_3_color }}">{{ block.settings.text_3 }}</span>
+    
+    {% endfor %}
+  </p>
+</div>
+    </div>
+</div>
+
+<script>
+
+var words = document.getElementsByClassName('word');
+var wordArray = [];
+var currentWord = 0;
+
+words[currentWord].style.opacity = 1;
+for (var i = 0; i < words.length; i++) {
+  splitLetters(words[i]);
+}
+
+function changeWord() {
+  var cw = wordArray[currentWord];
+  var nw = currentWord == words.length-1 ? wordArray[0] : wordArray[currentWord+1];
+  for (var i = 0; i < cw.length; i++) {
+    animateLetterOut(cw, i);
+  }
+  
+  for (var i = 0; i < nw.length; i++) {
+    nw[i].className = 'letter behind';
+    nw[0].parentElement.style.opacity = 1;
+    animateLetterIn(nw, i);
+  }
+  
+  currentWord = (currentWord == wordArray.length-1) ? 0 : currentWord+1;
+}
+
+function animateLetterOut(cw, i) {
+  setTimeout(function() {
+    cw[i].className = 'letter out';
+  }, i*80);
+}
+
+function animateLetterIn(nw, i) {
+  setTimeout(function() {
+    nw[i].className = 'letter in';
+  }, 340+(i*80));
+}
+
+function splitLetters(word) {
+  var content = word.innerHTML;
+  word.innerHTML = '';
+  var letters = [];
+  for (var i = 0; i < content.length; i++) {
+    var letter = document.createElement('span');
+    letter.className = 'letter';
+    letter.innerHTML = content.charAt(i);
+    word.appendChild(letter);
+    letters.push(letter);
+  }
+  
+  wordArray.push(letters);
+}
+
+changeWord();
+setInterval(changeWord, 2000);
+
+  
+</script>
+
+
+{% schema %}
+  {
+    "name": "Text Animation",
+    "tag" : "section",
+    "settings" : [
+           {
+        "type" : "text",
+        "id" : "main_text",
+        "label" : "write your text",
+        "default" : "default text"
+      },
+      {
+        "type" : "color",
+        "id" : "main_text_color",
+        "label" : "Color",
+        "default" : "#b05d5d"
+      }
+    ],
+    "blocks": [
+      {
+        "name" : "Animation Text",
+        "type" : "text", 
+        "settings" : [
+      {
+        "type" : "text",
+        "id" : "text_1",
+        "label" : "write your text 1"
+      },
+          {
+        "type" : "color",
+        "id" : "text_1_color",
+        "label" : "color",
+            "default":"#000000"
+      },
+
+
+            {
+        "type" : "text",
+        "id" : "text_2",
+        "label" : "write your text 2"
+      },
+            {
+        "type" : "color",
+        "id" : "text_2_color",
+        "label" : "color",
+        "default":"#000000"
+      },
+                {
+        "type" : "text",
+        "id" : "text_3",
+        "label" : "write your text 3"
+      },
+          {
+        "type" : "color",
+        "id" : "text_3_color",
+        "label" : "color",
+            "default":"#000000"
+      }
+
+          
+          
+        ]
+      }
+    ],
+    "presets" : [
+      {
+        "name" : "Text Animation"
+      }
+    ]
+  }
+{% endschema %}
+
+
+
+css file 
+
+.bodyy {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 40px;
+    background-color: white;
+    display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+.Outerblock {
+    position: relative;
+    z-index: 0;
+    width: 100vw;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    font-weight: bold;
+  padding-right:200px;
+    /* margin-top: 30px;
+  margin-bottom:50px; */
+
+    &::before {
+        content: '';
+        position: absolute;
+        z-index: -2;
+        left: -50%;
+        top: -50%;
+        width: 200%;
+        height: 200%;
+        background-color: #399953;
+        background-repeat: no-repeat;
+        background-size: 50% 50%, 50% 50%;
+        background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+       background-image: linear-gradient(#0A0E13,#0A0E13),linear-gradient(#293C4F,#293C4F),linear-gradient(#cbcbc8,#d3d3d3),linear-gradient(#949494,#828281);
+        animation: rotate 4s linear infinite;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: 6px;
+        top: 6px;
+        width: calc(100% - 12px);
+        height: calc(100% - 12px);
+        background: white;
+        border-radius: 5px;
+    }
+}
+
+
+
+.textt {
+    position: static;
+    width: 100vw;
+    /* padding-left:20vw; */
+  text-align:center;
+    height: 40px;
+    top: 50%;
+    /* margin-top: -20px; */
+    color: white;
+  margin-right:20px;
+}
+
+
+ 
+
+
+
+.textt p {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+  color:black;
+}
+
+.word {
+    position: absolute;
+    width: 100vw;
+    opacity: 0;
+}
+
+.letter {
+    display: inline-block;
+    position: relative;
+    float: left;
+    transform: translateZ(25px);
+    transform-origin: 50% 50% 25px;
+}
+
+.letter.out {
+    transform: rotateX(90deg);
+    transition: transform 0.32s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.letter.behind {
+    transform: rotateX(-90deg);
+}
+
+.letter.in {
+    transform: rotateX(0deg);
+    transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* .wisteria{
+    color: #cc0000;
+} */
+
+.belize {
+    color: #2980b9;
+}
+
+.pomegranate {
+    color: #c0392b;
+}
+
+.green {
+    color: #16a085;
+}
+
+.midnight {
+    color: #25ff08;
+}
+
+
+
+.word wisteria text_1{
+  color:blue;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+    body {
+        font-size: 20px;
+    }
+
+    .Outerblock {
+        height: 200px;
+        margin-top: 50px;
+    }
+
+    .textt  {
+        width: 100%;
+        left: 0;
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .letter {
+        transform-origin: 50% 50% 10px;
+        /* Adjust the third value for smaller depth */
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    bodyy {
+        font-size: 16px;
+    }
+
+    .Outerblock {
+        height: 150px;
+        margin-top: 30px;
+      padding-right:100px;
+    }
+
+    .textt {
+        font-size: 16px;
+        width: 100%;
+        left: 0;
+        margin-left: 0;
+        text-align: center;
+      /* margin-right:20px; */
+        /* padding-right: 85px; */
+        /* margin-right:200px; */
+    }
+
+    .letter {
+        transform-origin: 50% 50% 5px;
+        /* Further adjust the third value for smaller depth */
+    }
+}
+
+
+@media only screen and (max-width: 320px) {
+    bodyy {
+        font-size: 14px;
+    }
+
+    .Outerblock {
+        height: 120px;
+        margin-top: 20px;
+    }
+
+    .textt {
+        font-size: 14px;
+        width: 100%;
+        left: 0;
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .letter {
+        transform-origin: 50% 50% 3px;
+        /* Adjust the third value for smaller depth */
+    }
+}
