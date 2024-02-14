@@ -1,0 +1,73 @@
+<style>
+        .specification-main-container {
+            display: grid;
+            background: black;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1000px; 
+            margin: 0 auto;
+            padding: 20px; 
+        }
+
+        .specification-column {
+            padding: 10px; 
+            box-sizing: border-box;
+        }
+
+        .specification-title,
+        .specification-title-des {
+            color: white;
+            background-color: #3b4a3c;
+            padding: 10px; 
+            margin-bottom: 10px;
+        }
+
+        .specification-image {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+{% comment %}
+{% for variant in product.variants %}
+  <div class="specification-main-container">
+  <div class="right">
+    {% assign SpecificationTD = variant.metafields.custom.variant_specificataion_table.value | json %}
+    {% assign counter = 1 %}
+    {% for v in SpecificationTD %}
+    {% if forloop.index == counter %}
+    {% assign specifications = v | split: "::" %}
+      {% for spec in specifications %}
+      {% assign text = spec | replace: '"', '' | replace: '[', '' | replace: ']', '' | split: ',' %}
+      <div class="specification-column">
+          <div class="specification-title">{{ text[0] }}</div>
+          <div class="specification-title-des">{{ text[1] }}</div>
+      </div>
+      {% endfor %}
+    {% else %}
+    {% continue %}
+    {% endif %}
+    {% assign counter = counter | plus: 1 %}
+    {% endfor %}
+  </div>
+  <div class="left">
+    {% assign SpecificationImg = variant.metafields.custom.variant_specification_image.value | json %}
+    {% assign counter = 1 %}
+    {% if SpecificationImg %}
+    <div class="specification-column" id="variant-image">
+    <img src="{{ SpecificationImg | image_url: width: auto }}" class="specification-image" />
+    </div>
+    {% endif %}
+  </div>
+  </div>
+{% endfor %}
+  
+    
+    {% endcomment %}
+  
+  
+
+    
+  
+    
+
+
