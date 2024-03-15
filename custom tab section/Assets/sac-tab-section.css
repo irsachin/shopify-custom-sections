@@ -1,0 +1,215 @@
+/* Main tab container */
+
+.tab-section-container{
+    background-color:{{tab-section-bg}};
+  
+  }
+  @media screen and (max-width:1023px){
+    div#tab-section-container {
+      padding: 0px 14px;
+  }
+  }
+  .cus-main-tabs {
+    display: flex;
+    position: sticky;
+    top: 43px;
+    width: 80%;
+    margin: auto;
+    /* margin-top: 3rem; */
+    z-index: 459;
+    font-size:22px;  
+    padding: 8px;
+    
+    
+  }
+  
+  @media screen and (max-width: 1023px) {
+    .cus-main-tabs {
+      width: 100%; 
+      padding: 0; 
+      overflow-x: auto; 
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .cus-main-tabs {
+      width: 100%; 
+      font-size:16px;
+      padding-top: 10px; 
+      overflow-x: auto; 
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+  
+  .cus-main-tab {
+    /* flex: 1; */
+    text-align: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+     color:rgba(0, 0, 0, 0.6);
+    background: white;
+  }
+  .active {
+   color: #02b162;
+      border-bottom: 1px solid #02b162;
+  }
+  
+  /* headinds css */
+  .heeadings {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem 0px 1.5rem;
+  }
+  
+  .cus-banner-main-heading {
+    font-weight: 600;
+    text-align: center;
+    font-size: 2.3rem;
+    padding-bottom: 0.4rem;
+    margin: 0px;
+  }
+  .cus-banner-main-subheading {
+    margin: 0px;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 0px 7rem;
+  }
+  
+  /* Banner images  */
+  .align-tab-images {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    width: 80%;
+    margin-top: 15px;
+  }
+  @media screen and (max-width:1023px){
+      .align-tab-images , .container {
+        width: 100%;
+      }
+    }
+  /* video section */
+  .cus-des-video {
+    margin-top: 1rem;
+  }
+  
+  /* End Video section */
+  
+  /* image Tab section css */
+  
+  .container {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 3rem;
+  }
+  
+  @media screen and (max-width:1023px){
+     .container {
+        width: 100%;
+      }
+    }
+  
+  .container ul {
+    padding: 0 !important;
+  }
+  @media screen and (max-width:400px){
+   .container ul {
+      display: flex;
+      /* flex-direction: column; */
+      justify-content: center;
+     justify-content: space-around;
+    }
+  }
+  
+  .cats_list, .dogs_list {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    cursor: pointer;
+    list-style: none;
+    align-content: center;
+    position: sticky;
+    z-index: 81;
+  }
+  
+  .cats_item,  .dogs_item{
+    background-color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 2rem;
+    /* margin-bottom: unset; */
+    min-width: 12.5rem;
+    width: unset;
+    color: black;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    text-align: center;
+  }
+  
+  @media screen and (min-width:767px){
+  .cats_item, .dogs_item{
+    font-size: 2rem;
+  }
+  }
+  
+  @media screen and (max-width:430px){
+  .cats_item, .dogs_item{
+    min-width: auto;
+  }
+  }
+  
+  .cats_img-list,
+  .dogs_img-list {
+    display: flex;
+    justify-content: space-evenly;
+    cursor: pointer;
+    list-style: none;
+    align-content: center;
+    margin-bottom: -48px;
+    z-index: 76;
+    position: sticky;
+  }
+  
+  @media screen and (min-width:767px)
+  
+  {
+    .cats_img-list,
+  .dogs_img-list {
+     margin-top: -23px;
+  }
+  }
+  .cats_img-item, .dogs_img-item {
+    display: none;
+    margin-top: -59px;
+    margin-bottom: 5rem;
+    transition: display 0.5s ease;
+    /* display: block; */
+  }
+  @media screen and (max-width:400px){
+  .cats_img-item,
+    .dogs_img-item{
+    margin-top:-50px;
+  }
+  }
+  .aactive {
+    color: white;
+    background:#02b162;
+  }
+  .cus_tab_content {
+    /* padding-top: 10px; */
+    /*     border: 1px solid #ccc; */
+    /* margin-top: 20px; */
+  }
+  
+  /* tab section css end */
+  
+  .align-tab-images.cus-des-video video {
+    width: 100% !important;
+  }
+  

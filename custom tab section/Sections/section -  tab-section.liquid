@@ -1,0 +1,205 @@
+{{ 'sac-tab-section.css' | asset_url | stylesheet_tag }}
+
+{% assign theme_mode = section.settings.theme_mode %}
+{% case theme_mode %}
+  {% when 'light' %}
+  {% assign bg_color = '#ffffff' %}
+  {% assign text_color = '#000000' %}
+  {% assign faqbg_color ='#000000' %}
+  {% assign faqtext_color = '#ffffff' %}
+  {% assign tab_title_color = 'rgb(195 187 187 / 60%' %}
+  {% when 'dark' %}
+    {% assign bg_color = '#000000' %}
+  {% assign faqtext_color = '#000000' %}
+    {% assign faqbg_color ='#ffffff' %}
+    {% assign text_color = '#ffffff' %}
+    {% assign tab_title_color = 'white' %}
+{% endcase %}
+
+<style>
+  #tab-section-container {
+    background-color: {{ bg_color }};
+    color: {{ text_color }};
+  }
+ .cus-banner-main-heading{
+    color: {{ text_color }};
+  }
+  .cus-main-tabs{
+     background-color: {{ bg_color }};
+  }
+  .specification-column{
+    color: {{ text_color }} ;
+  }
+  .cus-main-tab{
+    background-color: {{ bg_color }};
+    color:{{ tab_title_color }};
+  }
+  .active{
+    color: #02b162 !important;
+  }
+
+  .faq-main-box{
+    background:{{ bg_color }};
+  }
+  /* .faq_details{
+    background:{{ bg_color }} ;
+    
+  } */
+  .faq_question{
+    color:{{text_color}} ;
+    
+  }
+</style>
+
+<!-- this should be show  -->
+<button id="DLButton" class="DLButton"> Light</button>
+
+<div id="tab-section-container">
+  
+<div class="cus-main-tabs" id="cus-main-tabs">
+  <div class="cus-main-tab" onclick="scrollToContent('content1')">Description</div>
+  <div class="cus-main-tab" onclick="scrollToContent('content2')">Specification</div>
+  <div class="cus-main-tab" onclick="scrollToContent('content3')">FAQ</div>
+  <div class="cus-main-tab" onclick="scrollToContent('content4')">Review</div>
+  <div  id="darklight"><i class="fa fa-moon-o" aria-hidden="true"></i></div>
+
+</div>
+
+<div id="content1" class="cus_tab_content" class="cus_description_box">
+  {% render 'sac-tab-section-description' %}
+</div>
+  
+  
+<div id="content2" class="cus_tab_content">
+   
+    <input type="hidden" id="load_vriant_data" value="{{ product.selected_or_first_available_variant.id }}">
+  
+  {% render 'sac-variant-specification' %}
+
+</div>
+
+<div id="content3" class="cus_tab_content" class="cus_faq_box">
+  {% render 'custom_product_faq' %}
+</div>
+
+<div id="content4" class="cus_tab_content">
+</div>
+</div>
+
+{{ 'sac-tab-section.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Tab Section",
+  "class": "tab-section",
+  "settings": [
+    {
+      "type":"text",
+      "id":"specification_title",
+      "label":"Specification Title",
+      "default":"Specification"
+    },
+    {
+      "type": "text",
+      "id": "custom-faq_main_title",
+      "label": "Main title"
+    },
+    {
+      "type": "radio",
+      "id": "theme_mode",
+      "label": "Theme Mode",
+      "options": [
+        {
+          "value": "light",
+          "label": "Light Mode"
+        },
+        {
+          "value": "dark",
+          "label": "Dark Mode"
+        }
+      ],
+      "default": "light"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tab Section"
+    } 
+  ]
+}
+  {% endschema %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var DLButton = document.getElementById('DLButton');
+
+    DLButton.addEventListener('click', () => {
+      let MainContainer = document.getElementById('tab-section-container');
+      let ButtonText = DLButton.textContent;
+      let BannerMainHeadings = document.getElementsByClassName('cus-banner-main-heading');
+      let BannerMainTabBg = document.getElementsByClassName('cus-main-tab');
+      let SpecificationColText = document.getElementsByClassName('specification-column');
+      let MainTabsBg = document.getElementById('cus-main-tabs');
+      let FaqBg = document.getElementById('faq-main-box');
+      let FaqDetailsBg = document.getElementsByClassName('faq_details');
+      let FaqQueText = document.getElementsByClassName('faq_question');
+      let FaqAnsText = document.getElementsByClassName('faq_answer');
+
+      if (ButtonText === "Light") {
+        // Switch to Dark Mode
+        MainContainer.style.backgroundColor = "white";
+        MainTabsBg.style.backgroundColor = "white";
+        FaqBg.style.backgroundColor = "white";
+        MainContainer.style.color = "black";
+        for (let i = 0; i < FaqDetailsBg.length; i++) {
+          FaqDetailsBg[i].style.backgroundColor = "white";
+        }
+        for (let i = 0; i < FaqQueText.length; i++) {
+          FaqQueText[i].style.color = "black";
+        }
+        for (let i = 0; i < FaqAnsText.length; i++) {
+          FaqAnsText[i].style.color = "black";
+        }
+        for (let i = 0; i < BannerMainHeadings.length; i++) {
+          BannerMainHeadings[i].style.color = "black";
+        }
+        for (let i = 0; i < BannerMainTabBg.length; i++) {
+          BannerMainTabBg[i].style.backgroundColor = "white";
+          BannerMainTabBg[i].style.color = "black";
+          
+        }
+        for (let i = 0; i < SpecificationColText.length; i++) {
+          SpecificationColText[i].style.color = "black";
+        }
+
+        DLButton.textContent = "Dark";
+      } else {
+        // Switch to Light Mode
+        MainContainer.style.backgroundColor = "black";
+        MainTabsBg.style.backgroundColor = "black";
+        FaqBg.style.backgroundColor = "black";
+        MainContainer.style.color = "white";
+        for (let i = 0; i < FaqDetailsBg.length; i++) {
+          FaqDetailsBg[i].style.backgroundColor = "black";
+        }
+        for (let i = 0; i < FaqQueText.length; i++) {
+          FaqQueText[i].style.color = "white";
+        }
+        for (let i = 0; i < FaqAnsText.length; i++) {
+          FaqAnsText[i].style.color = "white";
+        }
+        for (let i = 0; i < BannerMainHeadings.length; i++) {
+          BannerMainHeadings[i].style.color = "white";
+        }
+        for (let i = 0; i < BannerMainTabBg.length; i++) {
+          BannerMainTabBg[i].style.backgroundColor = "black";
+          BannerMainTabBg[i].style.color = "white";
+        }
+        for (let i = 0; i < SpecificationColText.length; i++) {
+          SpecificationColText[i].style.color = "white";
+        }
+        DLButton.textContent = "Light";
+      }
+    });
+  });
+</script>
