@@ -1,0 +1,55 @@
+{{ 'custom_image_overlay.css' | asset_url | stylesheet_tag }}
+<div class="section_head"><h1>{{ section.settings.imageov_main_heading }}</h1></div>
+<div class="custom_main_container">
+{% for block in section.blocks %}
+    <div class="blockone">
+     <img src="{{ block.settings.image_1 | img_url: 'master' }}"/>
+    <div class="custom_overlay">
+      <P>{{ block.settings.descript_txt }}</P>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+{% schema %}
+  {
+    "name": "CustomImageOverlay",
+    "tag" : "section",
+    "settings" : [
+      {
+        "type":"text",
+        "id":"imageov_main_heading",
+        "label":"Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "name" : "Main Text",
+        "type" : "text",
+        "settings" : [
+      {
+        "type" : "image_picker",
+        "id" : "image_1",
+        "label" : "write your text 1"
+      },
+
+           {
+        "type" : "text",
+        "id" : "descript_txt",
+        "label" : "write the description here !"
+      }
+        ]
+      }
+    ],
+    "presets" : [
+      {
+        "name" : "custom image overlay"
+      }
+    ]
+  }
+{% endschema %}
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

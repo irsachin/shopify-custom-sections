@@ -1,0 +1,147 @@
+.section_head{
+    text-align:center;
+    background-color:#F1F1F1;
+    padding-top:15px;
+  }
+  
+  .section_head h1{
+  color:black;
+  }
+  
+  .blockone img{
+    width: 100px;
+  }
+  
+  
+  
+  .custom_main_container{
+      display: flex;
+     padding:20px;
+    background-color:#F1F1F1;
+  }
+  
+  .blockone, .blocktwo, .blockthree, .blockfour {
+     
+      background-color:white;
+      text-align: center;
+      width: 25%;
+      height: 150px;
+      /* border: 1px solid black; */
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      border-radius:7px;
+      margin: 5px;
+      position: relative; /* Adding position relative for overlay positioning */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  
+  .blockone, .blocktwo, .blockthree, .blockfour h1{
+    color:white;
+  }
+  
+  .custom_overlay P{
+      font-size: 12PX;
+     color:black;
+    padding:10px;
+  }
+  
+  .custom_overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border-radius:5px;
+      height: 100%;
+      background-color: white; /* semi-transparent white background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0; /* Initially hidden */
+      transition: opacity 0.5s ease; /* Smooth transition */
+  }
+  
+  .custom_overlay .custom_text {
+      font-size: 24px;
+  }
+  
+  
+  .blockone:hover {
+      width: 50%;
+      background-color: rgb(39, 39, 41);
+      cursor: pointer;;
+      cursor: pointer;
+      transition: .5s ease;
+      border-radius:5px;
+    }
+  
+  
+    .blocktwo:hover {
+      width: 50%;
+      background-color: rgb(39, 39, 41);
+      cursor: pointer;
+      transition: .5s ease;
+      border-radius:5px;
+      
+    }
+  
+    .blockthree:hover {
+      width: 50%;
+      background-color: rgb(39, 39, 41);
+      cursor: pointer;;
+      cursor: pointer;
+      transition: .5s ease;
+      border-radius:5px;
+      
+    }
+  
+    .blockfour:hover {
+      width: 50%;
+      background-color: rgb(39, 39, 41);
+      cursor: pointer;;
+      cursor: pointer;
+      transition: .5s ease;
+      border-radius:5px;
+      
+    }  
+  
+  .blockone:hover .custom_overlay,
+  .blocktwo:hover .custom_overlay,
+  .blockthree:hover .custom_overlay,
+  .blockfour:hover .custom_overlay{
+      opacity: 1; /* Displaying overlay when block is hovered */
+      border-radius:5px;
+  }
+  
+  
+  /* media queries css */
+  
+  @media only screen and (max-width: 600px) {
+   .custom_main_container {
+      display: flex;
+      flex-direction: column;
+  align-items: center;
+    }
+  
+    .blockone{
+      width:80%;
+    }
+    
+   .blockone:hover {
+      width: 100%;
+      background-color: #272729;
+      cursor: pointer;
+      transition: .5s ease;
+      border-radius: 5px;
+  }
+    
+  }
+  
+  @media only screen and (max-width: 600px) {
+  .t4s-shipping.t4s-shipping-item.t4s-col-item.is-selected {
+      margin-top: 1px !important;
+  }
+  }
+  
+  
+  
