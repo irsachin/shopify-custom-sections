@@ -1,12 +1,7 @@
-{% assign FontSize = section.settings.font_size %}
-
 <style>
 .usp_heading{
   text-align:center;
 }
-  .usp_heading h1{
-    font-size:{{FontSize}}px;
-  }
 .product-usp-container {
   display: flex;
   flex-wrap: wrap;
@@ -20,7 +15,7 @@
 }
 
 .product-usp img {
-  width: 100px;
+  width: 100%;
   height: auto;
 }
 
@@ -43,25 +38,27 @@
   
 </style>
 
-
 {% assign UspIcons = product.metafields.custom.product_usp.value %}
-{% if UspIcons %}
+{% assign UspTitles = product.metafields.custom.usp_titles.value %}
+
 <div class="usp_box">
   <div class="usp_heading">
     <h1>{{ section.settings.product_usp_heading }}</h1>
   </div>
   <div class="product-usp-container">
     {% for im in UspIcons %} 
-      {% assign alt_value = im.alt %}
       
       <div class="product-usp">
         {{ im | image_url: width: auto | image_tag }}
-        <h3 class="usp-title">{{ alt_value }}</h3>
+        <h3 class="usp-title">usp title</h3>
       </div>
 {% endfor %}
    
   </div>
-  {% endif %}
+</div>
+{% for ti in UspTitles %}
+  <h3 class="usp-title">{{ ti }}</h3>
+  {% endfor %}
 
 
 
@@ -73,17 +70,7 @@
       "type": "text",
       "label": "Heading",
       "id": "product_usp_heading"
-    },
-    {
-     "type": "range",
-     "id": "font_size",
-     "min": 10,
-     "max": 60,
-     "step": 1,
-     "unit": "px",
-     "label": "Font size",
-     "default": 20
- }
+    }
   ],
   "presets": [
     {

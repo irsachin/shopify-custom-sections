@@ -1,17 +1,28 @@
 <style>
   .faq-main-box{
     padding-bottom:5rem;
+    padding-top: 5rem;
+    /* background: black; */
   }
   .faq-section {
-    max-width: 760px;
+    max-width: 80%;
     margin: 0 auto;
-    box-shadow:0px 0px 1px;
+    /* box-shadow:0px 0px 1px; */
+    /* background:black; */
     /* padding-bottom:5rem; */
   }
-
-  .faq_details {
-    cursor: pointer;
+  
+  @media screen and (max-width:1023px)
+  {
+    .faq-section{
+      max-width:100%;
+    }
   }
+
+  /* .faq_details {
+    cursor: pointer;
+    background:white;
+  } */
 
   .faq_summary:focus-visible {
     outline: 2px solid orange;
@@ -20,8 +31,12 @@
   }
 
   .faq_question {
-    width: 760px;
-        margin: 0px 17px;
+    width: 100%;
+    margin-left: 1rem;
+    font-size: 1.8rem;
+    word-spacing: 3px;
+    font-weight: 400;
+    /* color: rgb(0, 0, 0); */
   }
 
   .faq_summary {
@@ -30,6 +45,9 @@
     display: flex;
     justify-item: space-between;
     align-items: center;
+    justify-content: space-between;
+        min-height: 48px;
+    
     /* margin-bottom: 25px; */
   
   }
@@ -41,17 +59,27 @@
 
   .show_faq {
     margin-top: 4px;
-    color: #000000;
+    color: #ffffff;
   }
 
   details > .faq_answer {
-    max-width: 650px;
-    color: #090909;
-    font-size: 15px;
-    line-height: 155%;
-    letter-spacing: .1px;
-    margin-bottom: 40px;
-    margin-left: 25px;
+    width: 100%;
+    margin-left: 1rem;
+    font-size: 1.8rem;
+    word-spacing: 3px;
+    font-weight: 400;
+    color:rgb(136, 136, 136);
+    padding: 0px 16px 16px;
+  }
+
+  .Answer_A span{
+     width: 100%;
+    margin-left: 1rem;
+    font-size: 1.8rem;
+    word-spacing: 3px;
+    font-weight: 400;
+    color:rgb(136, 136, 136);
+    padding: 0px 16px 16px;
   }
 
   .faq_break {
@@ -153,9 +181,12 @@
 
   /* Arrow style */
   .faq_summary .arrow {
-    transition: transform 0.3s ease;
-    padding-right:4px;
-    font-size:16px;
+    padding: 6px;
+    font-size: 16px;
+    background: #02b162;
+    border-radius: 11px;
+    margin-right: 1rem;
+}
   }
 
   .faq_summary.open .arrow {
@@ -165,23 +196,86 @@
    .faq_summary.open {
     background-color: #f9f9f9;
   }
+  .Question_q{
+    position: relative;
+     margin-left:5px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-shrink: 0;
+    height: 40px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1;
+    overflow: hidden;
+    user-select: none;
+    background-color: #02b162;
+    color: rgb(255, 255, 255);
+    border-radius: 0.2rem;
+    font-weight: 700;
+    border: 1px solid #02b162;
+    width: 3.5rem;
+}
+
+  .answer_box{
+    display:flex;
+  }
+
+  .faq_answer {
+    /* margin-left: 1rem; */
+     width: 100%;
+    /* margin-left: 1rem; */
+    min-height: 50px;
+    font-size: 14.4px;
+    word-spacing: 3px;
+    font-weight: 400;
+    padding: 0px 16px 16px;
+}
+  
+.Answer_A{
+      position: relative;
+    display: flex;
+  margin-left:5px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-shrink: 0;
+    height: 40px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    line-height: 1;
+    overflow: hidden;
+    user-select: none;
+    background-color: rgb(255, 255, 255);
+    color: #02b162;
+    border-radius: 0.2rem;
+    font-weight: 700;
+    border: 1px solid #02b162;
+    width: 3.5rem;
+}
 </style>
 
 {% if product.metafields.custom.custom-faq.value != blank %}
-<div class="faq-main-box"><div><h1 class="custom-faq-title" id="custom-faq-title">{{ section.settings.custom-faq_main_title }}</h1></div> 
+<div class="faq-main-box" id="faq-main-box"><div><h1 class="custom-faq-title" id="custom-faq-title">{{ section.settings.custom-faq_main_title }}</h1></div> 
 <div class="faq-section">
  
   {% assign custom-faqTextArray = product.metafields.custom.custom-faq.value  %}
   {% for item in custom-faqTextArray %}
-    {% assign keyValue = item | split: '=' %}
-    <details class="faq_details">
+    {% assign keyValue = item | split: '==' %}
+    <details class="faq_details" id="faq_details">
       <summary class="faq_summary">
-        <h4 class="faq_question">{{ keyValue.first }}</h4>
+        <div class=" Question_q">Q </div>
+        <div class="faq_question"><span>{{ keyValue.first }}</span></div>
         <span class="show_faq arrow"> &#9660; </span>
       </summary>
-      <p class="faq_answer">{{ keyValue.last }}</p>
+      <div class="answer_box">
+      <div class="Answer_A">A</div>
+      <span class="faq_answer">{{ keyValue.last }}</span></div>
     </details>
-    <hr class="faq_break">
+    <br class="faq_break">
   {% endfor %}
 </div>
 </div>
@@ -194,60 +288,31 @@
 
     faqSummaries.forEach(function (summary) {
       summary.addEventListener('click', function () {
-        var faqContainer = this.parentNode;
-        faqContainer.classList.toggle('open');
+        var faqContainer = this.closest('.faq_details');
+        var isOpen = faqContainer.open;
 
-        if (faqContainer.classList.contains('open')) {
-          closeOtherFAQs(faqContainer);
-        }
-
-        toggleArrow(this, faqContainer.classList.contains('open'));
+        closeOtherFAQs(faqContainer);
+        toggleArrow(this, !isOpen);
       });
     });
 
     function toggleArrow(summary, isOpen) {
       var arrow = summary.querySelector('.arrow');
       if (arrow) {
-        arrow.innerHTML = isOpen ? '&#9650;' : '&#9660;';
+        arrow.innerHTML = isOpen ? '&#9660;' : '&#9650;';
       }
     }
 
     function closeOtherFAQs(currentFAQ) {
-      var allFAQs = document.querySelectorAll('.faq_summary');
+      var allFAQs = document.querySelectorAll('.faq_details');
       allFAQs.forEach(function (faq) {
-        if (faq.parentNode !== currentFAQ) {
-          faq.parentNode.classList.remove('open');
-          toggleArrow(faq, false);
+        if (faq !== currentFAQ && faq.open) {
+          faq.open = false;
+          var summary = faq.querySelector('.faq_summary');
+          toggleArrow(summary, false);
         }
       });
     }
   });
 </script>
 
-
-
-
-{% schema %}
-{
-  "name": "Faq Section",
-  "tag": "section",
-  "class": "sections-policies-block",
-  "settings": [
-    {
-      "type": "text",
-      "id": "custom-faq_main_title",
-      "label": "Main title"
-    },
-    {
-      "type": "text",
-      "id": "custom-faq_text",
-      "label": "custom-faq text"
-    }
-  ],
-  "presets": [
-    {
-      "name": "custom faq section"
-    }
-  ]
-}
-{% endschema %}

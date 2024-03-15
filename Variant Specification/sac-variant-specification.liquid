@@ -1,0 +1,150 @@
+<style>
+   .cus_specification_titie{
+    text-align:center;
+     font-size:18px;
+  }
+    .cus_specification_titie h2{
+    text-align:center;
+     font-size:18px;
+  }
+    .specification-main-container {
+      padding-top:50px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        max-width: 80%;
+        margin: 0 auto;
+      padding-bottom:50px;
+    }
+   @media only screen and (max-width: 768px) {
+    .specification-main-container{
+      display: grid;
+        grid-template-columns: repeat(1, 1fr)!important;
+        gap: 20px;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+  }
+    @media only screen and (max-width: 1023px) {
+    .specification-main-container{
+        max-width: 100%;
+        margin: 0 auto;
+    }
+  }
+   .specification-column {
+        padding: 10px;
+        box-sizing: border-box;
+       width: 100%;
+     tex-align:center;
+      border-bottom:1px solid #a8a8a8;
+}
+    
+ 
+
+    .specification-title,
+    .specification-title-des {
+        width:100%;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+  .title-des-table{
+    display:flex;
+  }
+  .right_item{
+    display:flex;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    align-content: center;
+    justify-content: center;
+    padding: 2px 0px 2px 0px;
+}
+  @media only screen and (max-width: 768px){
+     .right_item{
+    font-size: 16px !important;
+  }
+}
+  }
+  .right_item ,
+  .left_item
+  {
+      width: 100%; 
+  }
+  .right_item img{
+    width:200px;
+    height:200px;
+    
+  }
+  .spe_img_container{
+    margin:auto;
+  }
+ 
+    </style>
+    
+    <div class="specification-main-container">
+  
+    {% assign variable = 1 %}
+    {% for variant in product.variants %}
+    <div class="hide_onload right specification_{{ variant.id }}">
+    {% assign SpecificationTD = variant.metafields.custom.variant_specificataion_table.value %}
+    {% if forloop.index == variable %}
+    {% for STD in SpecificationTD %}
+    <div class="right_item">
+    {% assign alt_value = STD | split: '::' %}
+    <div class="specification-column">
+    {{ alt_value | first }}
+    </div>
+    <div class="specification-column">
+    {{ alt_value | last }}
+    </div>
+    </div>
+    {% endfor %}
+    
+    {% endif %}
+    </div>
+      
+    {% assign SpecificationTDImage = variant.metafields.custom.variant_specification_image.value %}
+    
+      {% if SpecificationTDImage %}
+      <div class="hide_onload left variant-img-main-div_{{ variant.id }} spe_img_container">
+      {% if forloop.index == variable %}
+      <div class="right_item variant-img-div">{{ SpecificationTDImage | image_url: width: auto | image_tag }}</div>
+      {% endif %}
+    </div>
+    {% endif %}
+      
+    {% assign variable = variable | plus: 1 %}
+    {% endfor %}
+    </div>
+    
+<script>
+  $(document).ready(function() {
+    $('.hide_onload').css('display' , 'none');
+    var lvd = $('#load_vriant_data').val();
+    console.log(lvd);
+    if(lvd != '')
+    {
+      $(".specification_"+lvd).css('display' , 'block');
+      $(".variant-img-main-div_"+lvd).css('display' , 'block');
+    }
+    
+  });
+  function myVariantGet(va){
+  $('.hide_onload').css('display' , 'none');
+  console.log(va);
+    var gvil = $('.get_variant_id_'+va).attr('data-var-id');
+    console.log(gvil)
+    if(gvil != '')
+    {
+     $(".specification_"+gvil).css('display' , 'block');
+    $(".variant-img-main-div_"+gvil).css('display' , 'block');
+     
+    }
+    
+    
+  }
+</script>
+  
+  
+
+    
