@@ -1,4 +1,4 @@
-window.addEventListener('scroll', function() {
+ window.addEventListener('scroll', function() {
     var contentSections = document.querySelectorAll('.cus_tab_content');
     var tabs = document.querySelectorAll('.cus-main-tab');
     var fromTop = window.scrollY;
