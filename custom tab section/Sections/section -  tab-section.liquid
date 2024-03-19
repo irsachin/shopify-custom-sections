@@ -49,10 +49,13 @@
     color:{{text_color}} ;
     
   }
+  .SLButton{
+    display:none;
+  }
 </style>
 
 <!-- this should be show  -->
-<button id="DLButton" class="DLButton"> Light</button>
+
 
 <div id="tab-section-container">
   
@@ -61,7 +64,8 @@
   <div class="cus-main-tab" onclick="scrollToContent('content2')">Specification</div>
   <div class="cus-main-tab" onclick="scrollToContent('content3')">FAQ</div>
   <div class="cus-main-tab" onclick="scrollToContent('content4')">Review</div>
-  <div  id="darklight"><i class="fa fa-moon-o" aria-hidden="true"></i></div>
+  <div class="cus-main-tab DLButton DSModeBut" id="DLButton"><i class="fa-solid fa-moon"></i></div>
+  <div class="cus-main-tab SLButton DSModeBut" id="SLButton"><i class="fa-regular fa-sun"></i></div>
 
 </div>
 
@@ -128,78 +132,100 @@
   ]
 }
   {% endschema %}
-
+  
+<style>
+  .SLButton {
+    display: none;
+  }
+</style>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var DLButton = document.getElementById('DLButton');
+  var DLButton = document.getElementById('DLButton');
+  var SLButton = document.getElementById('SLButton');
+  var darkMode = false; // Light mode is the default mode
 
-    DLButton.addEventListener('click', () => {
-      let MainContainer = document.getElementById('tab-section-container');
-      let ButtonText = DLButton.textContent;
-      let BannerMainHeadings = document.getElementsByClassName('cus-banner-main-heading');
-      let BannerMainTabBg = document.getElementsByClassName('cus-main-tab');
-      let SpecificationColText = document.getElementsByClassName('specification-column');
-      let MainTabsBg = document.getElementById('cus-main-tabs');
-      let FaqBg = document.getElementById('faq-main-box');
-      let FaqDetailsBg = document.getElementsByClassName('faq_details');
-      let FaqQueText = document.getElementsByClassName('faq_question');
-      let FaqAnsText = document.getElementsByClassName('faq_answer');
+  // Function to toggle between dark and light modes
+  function toggleMode() {
+    let MainContainer = document.getElementById('tab-section-container');
+    let BannerMainHeadings = document.getElementsByClassName('cus-banner-main-heading');
+    let BannerMainTabBg = document.getElementsByClassName('cus-main-tab');
+    let SpecificationColText = document.getElementsByClassName('specification-column');
+    let MainTabsBg = document.getElementById('cus-main-tabs');
+    let FaqBg = document.getElementById('faq-main-box');
+    let FaqDetailsBg = document.getElementsByClassName('faq_details');
+    let FaqQueText = document.getElementsByClassName('faq_question');
+    let FaqAnsText = document.getElementsByClassName('faq_answer');
 
-      if (ButtonText === "Light") {
-        // Switch to Dark Mode
-        MainContainer.style.backgroundColor = "white";
-        MainTabsBg.style.backgroundColor = "white";
-        FaqBg.style.backgroundColor = "white";
-        MainContainer.style.color = "black";
-        for (let i = 0; i < FaqDetailsBg.length; i++) {
-          FaqDetailsBg[i].style.backgroundColor = "white";
-        }
-        for (let i = 0; i < FaqQueText.length; i++) {
-          FaqQueText[i].style.color = "black";
-        }
-        for (let i = 0; i < FaqAnsText.length; i++) {
-          FaqAnsText[i].style.color = "black";
-        }
-        for (let i = 0; i < BannerMainHeadings.length; i++) {
-          BannerMainHeadings[i].style.color = "black";
-        }
-        for (let i = 0; i < BannerMainTabBg.length; i++) {
-          BannerMainTabBg[i].style.backgroundColor = "white";
-          BannerMainTabBg[i].style.color = "black";
-          
-        }
-        for (let i = 0; i < SpecificationColText.length; i++) {
-          SpecificationColText[i].style.color = "black";
-        }
-
-        DLButton.textContent = "Dark";
-      } else {
-        // Switch to Light Mode
-        MainContainer.style.backgroundColor = "black";
-        MainTabsBg.style.backgroundColor = "black";
-        FaqBg.style.backgroundColor = "black";
-        MainContainer.style.color = "white";
-        for (let i = 0; i < FaqDetailsBg.length; i++) {
-          FaqDetailsBg[i].style.backgroundColor = "black";
-        }
-        for (let i = 0; i < FaqQueText.length; i++) {
-          FaqQueText[i].style.color = "white";
-        }
-        for (let i = 0; i < FaqAnsText.length; i++) {
-          FaqAnsText[i].style.color = "white";
-        }
-        for (let i = 0; i < BannerMainHeadings.length; i++) {
-          BannerMainHeadings[i].style.color = "white";
-        }
-        for (let i = 0; i < BannerMainTabBg.length; i++) {
-          BannerMainTabBg[i].style.backgroundColor = "black";
-          BannerMainTabBg[i].style.color = "white";
-        }
-        for (let i = 0; i < SpecificationColText.length; i++) {
-          SpecificationColText[i].style.color = "white";
-        }
-        DLButton.textContent = "Light";
+    if (darkMode) {
+      // Switch to Light Mode
+      MainContainer.style.backgroundColor = "black";
+      MainTabsBg.style.backgroundColor = "black";
+      FaqBg.style.backgroundColor = "black";
+      MainContainer.style.color = "white";
+      for (let i = 0; i < FaqDetailsBg.length; i++) {
+        FaqDetailsBg[i].style.backgroundColor = "black";
       }
-    });
-  });
+      for (let i = 0; i < FaqQueText.length; i++) {
+        FaqQueText[i].style.color = "white";
+      }
+      for (let i = 0; i < FaqAnsText.length; i++) {
+        FaqAnsText[i].style.color = "white";
+      }
+      for (let i = 0; i < BannerMainHeadings.length; i++) {
+        BannerMainHeadings[i].style.color = "white";
+      }
+      for (let i = 0; i < BannerMainTabBg.length; i++) {
+        BannerMainTabBg[i].style.backgroundColor = "black";
+        BannerMainTabBg[i].style.color = "white";
+      }
+      for (let i = 0; i < SpecificationColText.length; i++) {
+        SpecificationColText[i].style.color = "white";
+      }
+
+      SLButton.style.display = "block";
+      DLButton.style.display = "none";
+    } else {
+      // Switch to Dark Mode
+      MainContainer.style.backgroundColor = "white";
+      MainTabsBg.style.backgroundColor = "white";
+      FaqBg.style.backgroundColor = "white";
+      MainContainer.style.color = "black";
+      for (let i = 0; i < FaqDetailsBg.length; i++) {
+        FaqDetailsBg[i].style.backgroundColor = "white";
+      }
+      for (let i = 0; i < FaqQueText.length; i++) {
+        FaqQueText[i].style.color = "black";
+      }
+      for (let i = 0; i < FaqAnsText.length; i++) {
+        FaqAnsText[i].style.color = "black";
+      }
+      for (let i = 0; i < BannerMainHeadings.length; i++) {
+        BannerMainHeadings[i].style.color = "black";
+      }
+      for (let i = 0; i < BannerMainTabBg.length; i++) {
+        BannerMainTabBg[i].style.backgroundColor = "white";
+        BannerMainTabBg[i].style.color = "black";
+      }
+      for (let i = 0; i < SpecificationColText.length; i++) {
+        SpecificationColText[i].style.color = "black";
+      }
+
+      DLButton.style.display = "block";
+      SLButton.style.display = "none";
+    }
+
+    // Toggle the mode flag
+    darkMode = !darkMode;
+  }
+
+  // Add click event listener to DLButton
+  DLButton.addEventListener('click', toggleMode);
+
+  // Add click event listener to SLButton
+  SLButton.addEventListener('click', toggleMode);
+
+  // Call toggleMode function initially to set the default mode
+  toggleMode();
 </script>
+
+
+
