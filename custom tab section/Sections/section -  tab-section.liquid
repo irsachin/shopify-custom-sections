@@ -30,10 +30,10 @@
   .specification-column{
     color: {{ text_color }} ;
   }
-  .cus-main-tab{
+  /* .cus-main-tab{
     background-color: {{ bg_color }};
     color:{{ tab_title_color }};
-  }
+  } */
   .active{
     color: #02b162 !important;
   }
@@ -138,6 +138,7 @@
     display: none;
   }
 </style>
+
 <script>
   var DLButton = document.getElementById('DLButton');
   var SLButton = document.getElementById('SLButton');
@@ -149,68 +150,61 @@
     let BannerMainHeadings = document.getElementsByClassName('cus-banner-main-heading');
     let BannerMainTabBg = document.getElementsByClassName('cus-main-tab');
     let SpecificationColText = document.getElementsByClassName('specification-column');
+    let TabBGzCol = document.getElementsByClassName('TabBGzCol');
     let MainTabsBg = document.getElementById('cus-main-tabs');
     let FaqBg = document.getElementById('faq-main-box');
     let FaqDetailsBg = document.getElementsByClassName('faq_details');
     let FaqQueText = document.getElementsByClassName('faq_question');
     let FaqAnsText = document.getElementsByClassName('faq_answer');
-
-    if (darkMode) {
-      // Switch to Light Mode
-      MainContainer.style.backgroundColor = "black";
-      MainTabsBg.style.backgroundColor = "black";
-      FaqBg.style.backgroundColor = "black";
-      MainContainer.style.color = "white";
+    
+    console.log("TabBGzCol length:", TabBGzCol.length);
+    
+    // Check if elements exist before applying styles
+    if (MainContainer) {
+      MainContainer.style.backgroundColor = darkMode ? "black" : "white";
+      MainContainer.style.color = darkMode ? "white" : "black";
+    }
+    
+    if (MainTabsBg) {
+      MainTabsBg.style.backgroundColor = darkMode ? "black" : "white";
+    }
+    
+    if (FaqBg) {
+      FaqBg.style.backgroundColor = darkMode ? "black" : "white";
+    }
+    
+    // Handle FAQ details only if they exist
+    if (FaqDetailsBg.length > 0) {
       for (let i = 0; i < FaqDetailsBg.length; i++) {
-        FaqDetailsBg[i].style.backgroundColor = "black";
+        FaqDetailsBg[i].style.backgroundColor = darkMode ? "black" : "white";
       }
       for (let i = 0; i < FaqQueText.length; i++) {
-        FaqQueText[i].style.color = "white";
+        FaqQueText[i].style.color = darkMode ? "white" : "black";
       }
       for (let i = 0; i < FaqAnsText.length; i++) {
-        FaqAnsText[i].style.color = "white";
+        FaqAnsText[i].style.color = darkMode ? "white" : "black";
       }
-      for (let i = 0; i < BannerMainHeadings.length; i++) {
-        BannerMainHeadings[i].style.color = "white";
-      }
-      for (let i = 0; i < BannerMainTabBg.length; i++) {
-        BannerMainTabBg[i].style.backgroundColor = "black";
-        BannerMainTabBg[i].style.color = "white";
-      }
-      for (let i = 0; i < SpecificationColText.length; i++) {
-        SpecificationColText[i].style.color = "white";
-      }
+    }
 
-      SLButton.style.display = "block";
-      DLButton.style.display = "none";
-    } else {
-      // Switch to Dark Mode
-      MainContainer.style.backgroundColor = "white";
-      MainTabsBg.style.backgroundColor = "white";
-      FaqBg.style.backgroundColor = "white";
-      MainContainer.style.color = "black";
-      for (let i = 0; i < FaqDetailsBg.length; i++) {
-        FaqDetailsBg[i].style.backgroundColor = "white";
-      }
-      for (let i = 0; i < FaqQueText.length; i++) {
-        FaqQueText[i].style.color = "black";
-      }
-      for (let i = 0; i < FaqAnsText.length; i++) {
-        FaqAnsText[i].style.color = "black";
-      }
-      for (let i = 0; i < BannerMainHeadings.length; i++) {
-        BannerMainHeadings[i].style.color = "black";
-      }
-      for (let i = 0; i < BannerMainTabBg.length; i++) {
-        BannerMainTabBg[i].style.backgroundColor = "white";
-        BannerMainTabBg[i].style.color = "black";
-      }
+    // Handle SpecificationColText if it exists
+    if (SpecificationColText.length > 0) {
       for (let i = 0; i < SpecificationColText.length; i++) {
-        SpecificationColText[i].style.color = "black";
+        SpecificationColText[i].style.color = darkMode ? "white" : "black";
       }
+    }
 
-      DLButton.style.display = "block";
-      SLButton.style.display = "none";
+    // Handle TabBGzCol if it exists
+     if (TabBGzCol.length > 0) {
+      for (let i = 0; i < TabBGzCol.length; i++) {
+        TabBGzCol[i].style.backgroundColor = darkMode ? "black !important" : "white !important";
+        TabBGzCol[i].style.color = darkMode ? "white !important" : "black !important";
+      }
+    }
+    
+    // Toggle button visibility
+    if (SLButton && DLButton) {
+      SLButton.style.display = darkMode ? "block" : "none";
+      DLButton.style.display = darkMode ? "none" : "block";
     }
 
     // Toggle the mode flag
@@ -218,14 +212,20 @@
   }
 
   // Add click event listener to DLButton
-  DLButton.addEventListener('click', toggleMode);
+  if (DLButton) {
+    DLButton.addEventListener('click', toggleMode);
+  }
 
   // Add click event listener to SLButton
-  SLButton.addEventListener('click', toggleMode);
+  if (SLButton) {
+    SLButton.addEventListener('click', toggleMode);
+  }
 
   // Call toggleMode function initially to set the default mode
   toggleMode();
 </script>
+  
+
 
 
 
