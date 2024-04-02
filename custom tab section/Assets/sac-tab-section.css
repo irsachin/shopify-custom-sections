@@ -45,13 +45,13 @@
   /* flex: 1; */
   text-align: center;
   padding: 10px;
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
   cursor: pointer;
-   color:rgba(0, 0, 0, 0.6);
-  background: white;
+   /* color:rgba(0, 0, 0, 0.6); */
+  /* background: white; */
 }
 .active {
- color: #02b162;
+ color: #02b162 !important;
     border-bottom: 1px solid #02b162;
 }
 
@@ -84,7 +84,12 @@
   justify-content: center;
   margin: auto;
   width: 80%;
+  /* margin-top: 15px; */
+}
+
+.align-tab-images img{
   margin-top: 15px;
+  width:100%;
 }
 @media screen and (max-width:1023px){
     .align-tab-images , .container {
