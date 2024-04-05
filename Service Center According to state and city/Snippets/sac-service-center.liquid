@@ -1,0 +1,267 @@
+<style>
+    .cus_select {
+        cursor: pointer;
+        width: 300px;
+        min-height: 40px;
+        max-height: 300px;
+        border-radius: 7px;
+        background-color: #f9f7f2;
+        transition: all 300ms;
+        font-size: 16px;
+        margin-bottom: 10px; /* Added margin to separate elements */
+    }
+
+    .cus_select:hover {
+        background: white;
+        color: black;
+    }
+
+    .cus_select.opened {
+        overflow-y: scroll;
+    }
+
+    .cus_select option {
+        background: #d2d8ed;
+    }
+
+    .cus_select option:nth-child(even) {
+        background: #c3c4cf;
+        color:black;
+    }
+
+    #static_content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 40px;
+        padding: 10px;
+    }
+
+    .service_main_heading {
+        width: auto;
+        color: #12377a;
+        border-bottom: 2px solid #12377a;
+        font-weight: bold;
+    }
+
+    .service_main_subheading {
+        width: auto;
+    }
+
+    .service-center-form {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .service-center-filter {
+        background-color:  #00008b24;
+        padding: 20px 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        transition: .3s all ease-in-out;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .cus_field-body {
+        display: flex;
+        justify-content: center;
+    }
+
+    .button_input_submit {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .center_details {
+        display: none;
+        background-color: #00008b24;
+        padding: 20px 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        transition: .3s all ease-in-out;
+        width: fit-content;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        margin-bottom: 0px;
+    }
+
+    @media (max-width: 600px) {
+        .service-center-form {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cus_select {
+            width: 100%;
+            max-width: none;
+        }
+
+        .service-center-filter {
+            max-width: 100%;
+        }
+    }
+
+    .cus_submit_button {
+        cursor: pointer;
+        width: 300px;
+        min-height: 40px;
+        max-height: 300px;
+        border-radius: 7px;
+        background-color: white;
+        transition: all 300ms;
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #12377a;
+    }
+
+    .cus_submit_button:hover {
+        background: #2d4c99;
+        color: white;
+    }
+
+    .service-center-box {
+        background: #4682b461;
+    }
+</style>
+
+<div class="service-center-box">
+    <div id="static_content">
+        <h2 class="service_main_heading">{{ section.settings.service_heading }}</h2>
+        <p class="service_main_subheading">{{ section.settings.service_subheading }}</p>
+    </div>
+
+    <div class="service-center-form" isloaded="true">
+        <form class="service-center-filter" id="center_form" action="javascript:void(0);">
+            <div class="cus_field-body">
+                <select id="customer_state" class="cus_select" required="">
+                    <option class="cus_option">Select Your State</option>
+                </select>
+            </div>
+            <div class="cus_field-body">
+                <select id="customer_city" class="cus_select" required="">
+                    <option class="cus_option" value="">Select Your City</option>
+                </select>
+            </div>
+            <div class="button_input_submit">
+                <input
+                    type="submit"
+                    value="{{ section.settings.cus_button_label }}"
+                    class="btn btn--full btn--no-animate cus_submit_button"
+                >
+            </div>
+        </form>
+    </div>
+
+    <div id="center_details" class="center_details">
+        <h2 id="location"></h2>
+        <div id="shop_locations"></div>
+    </div>
+</div>
+
+<script>
+    
+    function populateStateOptions() {
+        const csvUrl = "{{ section.settings.service_csvfile }}";
+
+        fetch(csvUrl)
+            .then(response => response.text())
+            .then(csvData => {
+                const lines = csvData.split('\n');
+                const statesSet = new Set(); // Use a Set to store unique states
+
+                lines.forEach(line => {
+                    const cells = line.split(',');
+                    if (cells.length >= 2) { // Add a check to ensure cells array has at least two elements
+                        const state = cells[0].trim();
+                        statesSet.add(state); // Add each state to the Set
+                    }
+                });
+
+                const stateOptions = Array.from(statesSet).map(state => `<option value="${state}">${state}</option>`).join('');
+                document.getElementById('customer_state').innerHTML = `<option>Select Your State</option>${stateOptions}`;
+            })
+            .catch(error => console.error('Error fetching CSV file:', error));
+    }
+
+    populateStateOptions();
+
+    
+    document.getElementById('customer_state').addEventListener('change', function() {
+        const selectedState = this.value ? this.value.trim() : ''; // Add a check for undefined value
+        const csvUrl = "{{ section.settings.service_csvfile }}";
+
+        fetch(csvUrl)
+            .then(response => response.text())
+            .then(csvData => {
+                const lines = csvData.split('\n');
+                const cities = [];
+
+                lines.forEach(line => {
+                    const cells = line.split(',');
+                    if (cells.length >= 2) { // Add a check to ensure cells array has at least two elements
+                        const state = cells[0].trim();
+                        const city = cells[1].trim();
+
+                        if (state === selectedState && city) {
+                            cities.push(city); // Add each city from the selected state to the array 
+                        }
+                    }
+                });
+
+                const uniqueCities = [...new Set(cities)]; // Remove duplicates from cities array
+                const cityOptions = uniqueCities.map(city => `<option value="${city}">${city}</option>`).join('');
+                document.getElementById('customer_city').innerHTML = `<option value="">Select Your City</option>${cityOptions}`;
+            })
+            .catch(error => console.error('Error fetching CSV file:', error));
+    });
+
+    
+    document.getElementById('center_form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        const selectedState = document.getElementById('customer_state').value.trim();
+        const selectedCity = document.getElementById('customer_city').value.trim();
+        const csvUrl = "{{ section.settings.service_csvfile }}";
+
+        fetch(csvUrl)
+            .then(response => response.text())
+            .then(csvData => {
+                const lines = csvData.split('\n');
+                let shopLocationsHTML = '';
+
+                lines.forEach(line => {
+                    const cells = line.split(',');
+                    if (cells.length >= 6) { // Add a check to ensure cells array has at least six elements
+                        const state = cells[0].trim();
+                        const city = cells[1].trim();
+                        const location = cells[2].trim();
+                        const address = cells.slice(3, -3).join(',').trim(); // Join remaining elements as address
+                        const contactPerson = cells[cells.length - 3].trim(); // Third last element as contact person
+                        const mobileNumbers = cells.slice(-2).join(',').trim(); // Last two elements as mobile numbers
+
+                        if (state === selectedState && city === selectedCity) {
+                            // Append shop location details to the HTML string
+                            shopLocationsHTML += `
+                                <div class="shop_location">
+                                    <h3>${location}</h3>
+                                    <p><b>Address:</b> ${address}</p>
+                                    <p><b>Contact Person:</b> ${contactPerson}</p>
+                                    <p><b>Mobile Numbers:</b> ${mobileNumbers}</p>
+                                </div>
+                            `;
+                        }
+                    }
+                });
+
+                // Update shop locations container with the generated HTML
+                document.getElementById('shop_locations').innerHTML = shopLocationsHTML;
+
+                // Display center details
+                document.getElementById('center_details').style.display = 'flex';
+            })
+            .catch(error => console.error('Error fetching CSV file:', error));
+    });
+</script>

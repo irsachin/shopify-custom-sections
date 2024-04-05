@@ -1,0 +1,39 @@
+{% render 'sac-service-center' %}
+
+
+
+{% schema %}
+{
+  "name": "Service Center",
+  "settings": [
+    {
+      "type": "text",
+      "id": "service_heading",
+      "label": "Heading"
+    },
+    {
+      "type": "html",
+      "id": "service_subheading",
+      "label": "Subheading (HTML)"
+    },
+    {
+      "type":"url",
+      "id":"service_csvfile",
+      "label":"CSV File Url"
+    },
+    {
+      "type":"text",
+      "id":"cus_button_label",
+      "label":"Button Label",
+      "default":"Find Center Near Me !"
+      
+    }
+  ],
+  "presets": [
+    {
+      "name":"Service Center"
+    }
+  ]
+}
+
+{% endschema %}
