@@ -1,0 +1,39 @@
+{% render 'sticky_label' %}
+{% schema %}
+  {
+    "name": "Home Page Sticky Label",
+    "settings": [
+      {
+        "type":"text",
+        "id":"Label_text",
+        "label":"Label Text",
+        "default":"Best Deal"
+      },
+       {
+        "type":"color",
+        "id":"label_text_color",
+        "label":"Label Text Color",
+        "default":"#fff"
+      },
+      {
+        "type":"color",
+        "id":"label_bg_color",
+        "label":"Label Background Color",
+        "default":"#000"
+      },
+      {
+        "type":"image_picker",
+        "id":"Label_image",
+        "label":"Image"
+      },
+      {
+        "type":"url",
+        "id":"sac_image_url",
+        "label":"Image URL"
+      }
+    ],
+    "presets": [{
+      "name":"Sticky Home Label"
+    }]
+  }
+{% endschema %}

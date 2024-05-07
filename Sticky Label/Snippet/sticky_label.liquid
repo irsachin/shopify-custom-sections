@@ -1,0 +1,87 @@
+{% assign labelBGcol =section.settings.label_bg_color %}
+{% assign labelTEXTcol =section.settings.label_text_color %}
+
+<style>
+  .sac_sticky_container {
+    position: relative;
+    height: auto;
+    overflow: hidden;
+  }
+
+  .sac_sticky_label {
+   position: fixed;
+    top: calc(55% - 20px);
+    right: -41px;
+    transform: translateY(-50%) rotate(270deg);
+    background-color: {{labelBGcol}};
+    color: {{labelTEXTcol}};
+    FONT-SIZE:20PX;
+    padding: 9px 21px;
+    cursor: pointer;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    z-index: 1000;
+    white-space: nowrap;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  }
+
+  .sac_sticky_popup {
+    position: fixed;
+    top: 60px;
+    right: -400px;
+    width: auto;
+    height: auto%;
+    background-color: white;
+    z-index: 1000;
+    transition: right 0.3s ease;
+  }
+
+  .sac_sticky_popup-content {
+    /* padding: 20px; */
+  }
+
+  .sac_sticky_popup.open {
+    right: 0;
+  }
+
+  .close-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+</style>
+{% assign img = section.settings.Label_image %}
+{% assign Img_URL = section.settings.sac_image_url %}
+<div class="sac_sticky_sac_sticky_container">
+  <div class="sac_sticky_label" onclick="togglesac_sticky_popup()">{{ section.settings.Label_text }}</div>
+  <div class="sac_sticky_popup" id="sac_sticky_popup">
+    <div class="sac_sticky_popup-content">
+      
+      
+      {% if img %}
+        
+      <div style="position: relative;">
+        <a href="{{ Img_URL }}">
+        {{ img | image_url: width: auto | image_tag }}</a>
+        <div class="close-icon" onclick="togglesac_sticky_popup()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0z"/>
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+          </svg>
+        
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  function togglesac_sticky_popup() {
+    var sac_sticky_popup = document.getElementById("sac_sticky_popup");
+    sac_sticky_popup.classList.toggle("open");
+  }
+</script>
