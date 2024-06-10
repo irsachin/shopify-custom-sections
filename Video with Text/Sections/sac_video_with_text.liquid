@@ -1,0 +1,105 @@
+{{ 'sac_video_with_text.css' | asset_url | stylesheet_tag }}
+
+<div class="main--parent_video">
+  <div class="video--text-flex">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'video_block' %}
+          <div class="video--block">
+            <div class="video--grabber">
+              <video controls>
+                <source src="{{ block.settings.video }}" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        {% when 'text_block' %}
+          <div class="text--block">
+            <div class="text--grabber">
+              <h2 class="text--heading">{{ block.settings.heading }}</h2>
+              <p class="text--content">{{ block.settings.content }}</p>
+              <button class="text--button" style="background-color: {{ block.settings.bgColor }};">
+                <a href="{{ block.settings.btn_url }}" style="color: {{ block.settings.txtColor }};">
+                  {{- block.settings.btn_text -}}
+                </a>
+              </button>
+            </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Video with Text - AN",
+  "class" : "custom--section-videoWtext",
+  "blocks": [
+    {
+      "name" : "video",
+      "type" : "video_block",
+      "settings" : [
+        {
+          "type" : "url",
+          "id" : "video",
+          "label" : "Select Video",
+          "info" : "Paste the video URL to the input"
+        }
+      ]
+    },
+    {
+      "name" : "text",
+      "type" : "text_block",
+      "settings" : [
+        {
+          "type" : "text",
+          "id" : "heading",
+          "label" : "Heading",
+          "default" : "Only good vibes here."
+        },
+        {
+          "type" : "text",
+          "id" : "content",
+          "label" : "Content",
+          "default" : "Buh-bye to dull moments, Hello thrilling sensations. Elevate your bedroom experience with our curated range of products and make playtime fun."
+        },
+        {
+          "type" : "text",
+          "id" : "btn_text",
+          "label" : "Button Label",
+          "default" : "COUNT ME IN"
+        },
+        {
+          "type" : "url",
+          "id" : "btn_url",
+          "label" : "Button Link"
+        },
+        {
+          "type" : "color",
+          "id" : "bgColor",
+          "label" : "Button Background Color",
+          "default" : "#000000"
+        },
+        {
+          "type" : "color",
+          "id" : "txtColor",
+          "label" : "Button Text Color",
+          "default" : "#ffffff"
+        }
+      ]
+
+    }
+  ], "presets": [
+    {
+      "name" : "Video With Text - AN",
+      "blocks": [
+        {
+          "type" : "video_block"
+        },
+        {
+          "type" : "text_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
